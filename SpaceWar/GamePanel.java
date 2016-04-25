@@ -1,34 +1,66 @@
+
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.awt.Color;  
 import javax.swing.JPanel;
-  
-public class GamePanel extends JPanel{
-  	
-  	private BufferedImage bi;
-  	Graphics2D big;
-	ArrayList<Sprite> sprites = new ArrayList<Sprite>();
-  	
-  	public GamePanel(){
-  		bi = new BufferedImage(400, 650, BufferedImage.TYPE_INT_ARGB);
-  		big = (Graphics2D)bi.getGraphics();
-		big.setBackground(Color.BLACK);
-  	}
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+
+public class GamePanel extends JPanel implements KeyListener{
+
+	private SpaceShip sp;
+	public GamePanel(SpaceShip sp){
+		this.sp = sp;
 	
-	public void updateGameUI(){
-		big.clearRect(0, 0, 400, 650);
-  		
-		for(Sprite s : sprites){
-			s.draw(big);
-		}
+		setFocusable(true);
+		addKeyListener(this);
+	}
+
+	@Override
+	public void paint(Graphics g){
+		//super.paint(g);
+		Graphics2D g2d = (Graphics2D) g;
+		g2d.setBackground(Color.BLACK);  
+		g2d.fillRect(0, 0, 400, 650);
+		sp.draw(g2d);
 		repaint();
 	}
-	
-  	@Override
-  	public void paint(Graphics g) {
-  		Graphics2D g2d = (Graphics2D) g;
-  		g2d.drawImage(bi, null, 0, 0);
-  	}
+
+
+	@Override
+	public void keyPressed(KeyEvent e) {
+		int key = e.getKeyCode();
+		if(key == KeyEvent.VK_LEFT){
+			if(sp.x > 0)
+				sp.x -= 5;
+			//System.out.println(sp.x);
+		}
+		if(key == KeyEvent.VK_RIGHT){
+			if(sp.x < 365)
+				sp.x += 5;
+			//System.out.println(sp.x);
+		}
+		if(key == KeyEvent.VK_UP){
+			if(sp.y > 10)
+				sp.y -= 5;
+			//System.out.println(sp.y);
+		}
+		if(key == KeyEvent.VK_DOWN){
+			if(sp.y < 580)
+				sp.y += 5;
+			//System.out.println(sp.y);
+		}
+		
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		//do nothing
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		//do nothing		
+	}
 }
