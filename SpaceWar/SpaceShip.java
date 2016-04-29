@@ -5,15 +5,20 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.Rectangle2D.Double;
+import java.util.LinkedList;
 
 public class SpaceShip{
 	int x;
 	int y;
 	int width;
 	int height;
+	int score = 0;
 
 	private int speedx = 180;
 	private int speedy = 550;
+	private LinkedList<Enemy> e = ControlEm.getEnamyColision();
 
 	public SpaceShip(int x, int y, int width, int height){
 		this.x = x;
@@ -25,12 +30,13 @@ public class SpaceShip{
 	public void update(){
 		x = speedx;
 		y = speedy;
-
+		colision();
 	}
 	//@Override
 	public void draw(Graphics2D g2d){
 		g2d.setColor(Color.GREEN);
 		g2d.fillRect(x, y, width, height);
+		//g2d.draw(getRectangle());
 	}
 	
 	//@Override
@@ -59,9 +65,19 @@ public class SpaceShip{
 		
 	}
 
-	//@Override
 	public void keyReleased(KeyEvent e) {
 		
 	}
 
+	public Rectangle2D getRectangle(){
+		return new Rectangle2D.Double(x, y, width, height);
+	}
+
+	public void colision(){
+		for(int i = 0; i < e.size(); i++ ){
+			if((e.get(i).y) == 580)
+				score += 100;
+		}
+		System.out.println(score);
+	}
 }
