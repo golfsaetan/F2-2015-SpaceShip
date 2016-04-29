@@ -3,64 +3,59 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import javax.swing.JPanel;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
+import javax.swing.Timer;
 
-
-public class GamePanel extends JPanel implements KeyListener{
+public class GamePanel extends JPanel implements ActionListener{
 
 	private SpaceShip sp;
+	private ControlEm ce;
+	private Timer timer;
+	private Timer timer2;
+	
 	public GamePanel(SpaceShip sp){
 		this.sp = sp;
-	
+
+		timer = new Timer(10, this);
+		timer.start();
+		
+		ce = new ControlEm();
+		
+		timer2 = new Timer(150, new ActionListener() {	
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				creatEnemy();
+			}
+		});
+		timer2.start();
+		
 		setFocusable(true);
-		addKeyListener(this);
+		addKeyListener(new ControlSp(sp));
+	}
+
+	public void creatEnemy(){
+		ce.addEnemy();
 	}
 
 	@Override
 	public void paint(Graphics g){
-		//super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setBackground(Color.BLACK);  
 		g2d.fillRect(0, 0, 400, 650);
 		sp.draw(g2d);
-		repaint();
-	}
-
-
-	@Override
-	public void keyPressed(KeyEvent e) {
-		int key = e.getKeyCode();
-		if(key == KeyEvent.VK_LEFT){
-			if(sp.x > 0)
-				sp.x -= 5;
-			//System.out.println(sp.x);
-		}
-		if(key == KeyEvent.VK_RIGHT){
-			if(sp.x < 365)
-				sp.x += 5;
-			//System.out.println(sp.x);
-		}
-		if(key == KeyEvent.VK_UP){
-			if(sp.y > 10)
-				sp.y -= 5;
-			//System.out.println(sp.y);
-		}
-		if(key == KeyEvent.VK_DOWN){
-			if(sp.y < 580)
-				sp.y += 5;
-			//System.out.println(sp.y);
-		}
 		
+		ce.draw(g2d);
 	}
-
+	
 	@Override
-	public void keyReleased(KeyEvent e) {
-		//do nothing
-	}
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		//do nothing		
+	public void actionPerformed(ActionEvent e){
+		sp.update();
+		ce.update();
+		repaint();
 	}
 }

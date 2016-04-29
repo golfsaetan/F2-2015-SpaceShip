@@ -14,8 +14,7 @@ public class Main{
 
 		SpaceShip sp = new SpaceShip(180, 550, 20, 20);
 		GamePanel gp = new GamePanel(sp);
-		//frame.addKeyListener(gp);
-		//frame.setFocusable(true);
+		
 		frame.getContentPane().add(gp, BorderLayout.CENTER);
 		frame.setVisible(true);
 	}
