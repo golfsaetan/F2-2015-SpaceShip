@@ -32,14 +32,12 @@ public class SpaceShip{
 		y = speedy;
 		colision();
 	}
-	//@Override
+
 	public void draw(Graphics2D g2d){
 		g2d.setColor(Color.GREEN);
 		g2d.fillRect(x, y, width, height);
-		//g2d.draw(getRectangle());
 	}
 	
-	//@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		if(key == KeyEvent.VK_LEFT){
@@ -77,7 +75,9 @@ public class SpaceShip{
 		for(int i = 0; i < e.size(); i++ ){
 			if((e.get(i).y) == 580)
 				score += 100;
-		}
-		System.out.println(score);
+		}	
+	}
+	public int getScore(){
+		return score;
 	}
 }

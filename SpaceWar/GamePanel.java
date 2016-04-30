@@ -18,6 +18,7 @@ public class GamePanel extends JPanel implements ActionListener{
 	
 	static Timer timer;
 	static Timer timer2;
+
 	public GamePanel(SpaceShip sp){
 		this.sp = sp;
 
@@ -26,7 +27,7 @@ public class GamePanel extends JPanel implements ActionListener{
 		
 		ce = new ControlEm();
 
-		timer2 = new Timer(250, new ActionListener() {	
+		timer2 = new Timer(400, new ActionListener() {	
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				creatEnemy();
@@ -34,7 +35,7 @@ public class GamePanel extends JPanel implements ActionListener{
 			}
 		});
 		timer2.start();
-		
+
 		setFocusable(true);
 		addKeyListener(new ControlSp(sp));
 	}
@@ -45,12 +46,13 @@ public class GamePanel extends JPanel implements ActionListener{
 
 	@Override
 	public void paint(Graphics g){
-		//super.paint(g);
 		Graphics2D g2d = (Graphics2D) g;
 		g2d.setBackground(Color.BLACK);  
 		g2d.fillRect(0, 0, 400, 650);
 		sp.draw(g2d);
 		ce.draw(g2d);
+		g2d.setColor(Color.WHITE);
+		g2d.drawString(String.format("%08d",sp.getScore()), 300, 20);
 	}
 	
 	@Override
@@ -59,5 +61,4 @@ public class GamePanel extends JPanel implements ActionListener{
 		ce.update();
 		repaint();
 	}
-
 }
