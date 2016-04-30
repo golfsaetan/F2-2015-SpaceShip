@@ -15,9 +15,11 @@ public class Enemy{
 		this.y = y;
 	}
 
+	//@Override
 	public void draw(Graphics2D g) {
 		g.setColor(Color.RED);
 		g.fillRect(x, y, 5, 10);
+		//g.draw(getRectangle());
 	}
 
 	public void update(){

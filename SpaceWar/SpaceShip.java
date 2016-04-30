@@ -15,7 +15,8 @@ public class SpaceShip{
 	int width;
 	int height;
 	int score = 0;
-
+	//private Enemy sc ;
+	//private GamePanel stop;
 	private int speedx = 180;
 	private int speedy = 550;
 	private LinkedList<Enemy> e = ControlEm.getEnamyColision();
@@ -32,12 +33,14 @@ public class SpaceShip{
 		y = speedy;
 		colision();
 	}
-
+	//@Override
 	public void draw(Graphics2D g2d){
 		g2d.setColor(Color.GREEN);
 		g2d.fillRect(x, y, width, height);
+		//g2d.draw(getRectangle());
 	}
 	
+	//@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
 		if(key == KeyEvent.VK_LEFT){
@@ -63,6 +66,7 @@ public class SpaceShip{
 		
 	}
 
+	//@Override
 	public void keyReleased(KeyEvent e) {
 		
 	}
@@ -73,9 +77,16 @@ public class SpaceShip{
 
 	public void colision(){
 		for(int i = 0; i < e.size(); i++ ){
+			if(getRectangle().intersects(e.get(i).getRectangleEn())){
+				System.out.println("Colission");
+				GamePanel.timer.stop();
+				GamePanel.timer2.stop();
+			}
+
 			if((e.get(i).y) == 580)
 				score += 100;
-		}	
+		}
+		
 	}
 	public int getScore(){
 		return score;
